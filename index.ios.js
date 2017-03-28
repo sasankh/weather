@@ -25,12 +25,19 @@ const Weather = React.createClass({
   },
   render: function() {
     return (
-      <MapView
-        annotations={[this.state.pin]}
-        onRegionChangeComplete={this.onRegionChangeComplete}
-        style={[styles.map]}
-      >
-      </MapView>
+      <View style={[styles.container]}>
+        <MapView
+          annotations={[this.state.pin]}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          style={[styles.map]}
+        >
+        </MapView>
+        <View style={[styles.textWrapper]}>
+          <Text style={[styles.text]}>{this.state.city}</Text>
+          <Text style={[styles.text]}>{this.state.temperature}</Text>
+          <Text style={[styles.text]}>{this.state.description}</Text>
+        </View>
+      </View>
     );
   },
   onRegionChangeComplete: function(region){
@@ -43,18 +50,31 @@ const Weather = React.createClass({
 
     Api(region.latitude, region.longitude)
       .then((data) => {
-        console.log(data);
         this.setState(data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 });
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    backgroundColor: '#F5FCFF'
+  },
   map: {
-    flex: 1
+    flex: 2,
+    marginTop: 30
+  },
+  textWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 30
   }
 });
 
