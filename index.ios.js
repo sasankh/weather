@@ -11,7 +11,22 @@ const {
 
 const Weather = React.createClass({
   render: function() {
-    return <MapView style={styles.map}></MapView>
+    const pins = [{
+      latitude: 37,
+      longitude: -95
+    }];
+
+    return (
+      <MapView
+        annotations={pins}
+        onRegionChangeComplete={this.onRegionChangeComplete}
+        style={[styles.map]}
+      >
+      </MapView>
+    );
+  },
+  onRegionChangeComplete: function(region){
+
   }
 });
 
