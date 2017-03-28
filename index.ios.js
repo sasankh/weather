@@ -9,13 +9,18 @@ const {
   StyleSheet
 } = ReactNative;
 
+const Api = require('./src/api');
+
 const Weather = React.createClass({
   getInitialState: function() {
     return {
       pin: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      city: '',
+      temperature: '',
+      description: ''
     }
   },
   render: function() {
@@ -31,10 +36,19 @@ const Weather = React.createClass({
   onRegionChangeComplete: function(region){
     this.setState({
       pin: {
-        longitude: region.longitude,
-        latitude: region.latitude
+        latitude: region.latitude,
+        longitude: region.longitude
       }
-    })
+    });
+
+    Api(region.latitude, region.longitude)
+      .then((data) => {
+        console.log(data);
+        this.setState(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 
